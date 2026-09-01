@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado Final</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card-resultado { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 400px; }
+        .aprovado { color: #28a745; font-size: 2em; font-weight: bold; }
+        .exame { color: #ffc107; font-size: 2em; font-weight: bold; }
+        .reprovado { color: #dc3545; font-size: 2em; font-weight: bold; }
+        button { margin-top: 20px; padding: 10px 20px; background-color: #333; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="card-resultado">
+    <h2 id="nomeDisplay"></h2>
+    <p>Média Final: <strong id="mediaDisplay"></strong></p>
+    
+    <div id="statusFinal"></div>
+    <button onclick="voltar()">Voltar</button>
+</div>
+
+<script>
+    // Recupera dados
+    let nome = localStorage.getItem('nome');
+    let media = Number(localStorage.getItem('media'));
+    
+    // Regras de nota
+    let status = "REPROVADO";
+    let classeCss = "reprovado";
+
+   if (media >= 6) { 
+        status = "APROVADO";
+        classeCss = "aprovado";
+    } else if (media >= 2 && media < 6) { 
+        status = "EXAME";
+        classeCss = "exame";
+    }
+
+    // Preenche o HTML (no lugar de usar document.write para não apagar o visual)
+    document.getElementById('nomeDisplay').innerText = "Aluno(a): " + nome;
+    document.getElementById('mediaDisplay').innerText = media.toFixed(1);
+    document.getElementById('statusFinal').innerText = status;
+    document.getElementById('statusFinal').className = classeCss;
+
+    // Função do botão
+    function voltar() {
+        localStorage.clear();
+        window.location.href = 'index.html';
+    }
+</script>
+
+</body>
+</html>

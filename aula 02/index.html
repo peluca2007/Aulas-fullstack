@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Notas</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; display: flex; justify-content: center; }
+        .container { background: white; padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); width: 100%; max-width: 400px; }
+        form { display: flex; flex-direction: column; gap: 15px; }
+        input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        button { background-color: #0056b3; color: white; border: none; padding: 12px; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #004494; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Registro de Aluno</h2>
+        <form id="form">
+            Nome: <input id="nome" required>
+            N1: <input type="number" class="nota" step="0.1" required>
+            N2: <input type="number" class="nota" step="0.1" required>
+            N3: <input type="number" class="nota" step="0.1" required>
+            N4: <input type="number" class="nota" step="0.1" required>
+            <strong>Média: <span id="media">0.0</span></strong>
+            <button type="submit">Registrar resultado</button>
+        </form>
+
+        <script>
+            const inputs = document.querySelectorAll('.nota');
+
+            // Calcula a média em tempo real
+            document.getElementById('form').addEventListener('input', () => {
+                let soma = 0;
+                inputs.forEach(i => soma += Number(i.value) || 0);
+                document.getElementById('media').innerText = (soma / 4).toFixed(1);
+            });
+
+            // Salva os dados e muda de página
+            document.getElementById('form').addEventListener('submit', (e) => {
+                e.preventDefault(); 
+                
+                let vetorNotas = Array.from(inputs).map(i => Number(i.value)); 
+                let mediaFinal = vetorNotas.reduce((a, b) => a + b) / 4;
+
+                // ATENÇÃO: Primeiro salvamos tudo, DEPOIS mudamos de página
+                localStorage.setItem('nome', document.getElementById('nome').value);
+                localStorage.setItem('media', mediaFinal); 
+                window.location.href = 'resultado.html'; 
+            });
+        </script>
+    </div>
+
+</body>
+</html>

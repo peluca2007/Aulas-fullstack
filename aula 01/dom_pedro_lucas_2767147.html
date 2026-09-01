@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Exercício com DOM-HTML</title>
+    <style type="text/css" media="all">
+      .invisivel { opacity: 0; transform: scale(0.1); max-height: 0; }
+      .animada { transition: all linear 3s; opacity: 1; transform: scale(2); max-height: 100px; }
+      .ch { background-color: cyan; transform: scale(2); padding: 0 5px; }
+      .mascara { overflow: hidden; width: 387px; height: 60px; position: relative; }
+      .mascara .atrapalhando { position: absolute; left: 0; top: 0; height: 100%; width: 100%; background-color: red; }
+      .mascara .utfpr { height: 60px; width: 3000px; background-image: url(http://portal.utfpr.edu.br/++theme++utfpr_branco/img/logo.png); }
+    </style>
+  </head>
+  <body>
+    <h1>Exercício com DOM-HTML</h1>
+    <p>Faz <span class="dias"></span> que estamos estudando JavaScript.</p>
+
+    <p class="invisivel">Essa é uma mensagem escondida na página web.</p>
+    <p class="animada invisivel">Essa é uma mensagem animada na página web.</p>
+
+    <h2>Disciplinas por período</h2>
+    <ul id="lista-principal">
+      <li>ALGORITMOS - PERÍODO 1 - (90h)</li>
+      <li>INTRODUÇÃO A SISTEMAS OPERACIONAIS - PERÍODO 1 - (30h)</li>
+      <li>PROGRAMAÇÃO ORIENTADA A OBJETOS - PERÍODO 2 - (90h)</li>
+      <li>PROGRAMAÇÃO WEB FRONT-END - PERÍODO 2 - (60h)</li>
+      <li>BANCO DE DADOS - PERÍODO 2 - (60h)</li>
+      <li>PROGRAMAÇÃO WEB BACK-END - PERÍODO 3 - (60h)</li>
+      <li>ESTRUTURA DE DADOS - PERÍODO 3 - (60h)</li>
+      <li>PROGRAMAÇÃO WEB FULLSTACK - PERÍODO 4 - (60h)</li>
+      <li>ESTRATÉGIAS DE PROGRAMAÇÃO - PERÍODO 4 - (60h)</li>
+    </ul>
+
+    <p class="ch_total">Carga-horária total: </p>
+
+    <div class="mascara"><div class="atrapalhando"></div><div class="utfpr"></div></div>
+
+    <h2>Disciplinas em ordem alfabética</h2>
+    <ul class="ordenado">
+    </ul>
+
+    <h2>Disciplinas em ordem alfabética descrescente</h2>
+    <ul class="decrescente">
+    </ul>
+
+    <h2>Disciplinas de programação</h2>
+    <ul class="programacao"></ul>
+
+
+    <script>
+      // 1. Inclua a String " e JavaScript" no conteúdo interno dos elementos title e h1
+      document.querySelector('title').innerHTML += " e JavaScript";
+      document.querySelector('h1').innerHTML += " e JavaScript";
+
+      // 2. Calcular o número de dias desde 01/05 do ano atual e inserir na classe "dias"
+      let dataInicio = new Date(new Date().getFullYear(), 4, 1); // Mês 4 é Maio em JavaScript (0-11)
+      let dataAtual = new Date();
+      let diferencaMs = dataAtual.getTime() - dataInicio.getTime();
+      let diasPassados = Math.floor(diferencaMs / (1000 * 60 * 60 * 24));
+      document.querySelector('.dias').innerHTML = diasPassados + " dias";
+
+      // 3. Deixe o elemento span com o número de dias com uma cor de fundo vermelha
+      document.querySelector('.dias').style.backgroundColor = "red";
+
+      // 4. Faça os elementos com a classe invisivel, aparecerem na tela
+      let elementosInvisiveis = document.querySelectorAll('.invisivel');
+      elementosInvisiveis.forEach(elemento => {
+          elemento.classList.remove('invisivel');
+      });
+
+      // Variáveis auxiliares para os exercícios 5 a 12
+      let lis = document.querySelectorAll('#lista-principal li'); // Seleciona apenas os LIs da primeira lista
+      let somaCargaHoraria = 0;
+      let vetorDisciplinas = [];
+
+      lis.forEach(li => {
+          // 5. Deixar todas as letras minúsculas
+          let texto = li.innerHTML.toLowerCase();
+
+          // Extração das horas usando slice com valores negativos (Dica do item 7)
+          // Como o texto termina em "(90h)" ou "(30h)", usamos -4 e -2 para pegar os números
+          let horasStr = texto.slice(-4, -2);
+          let horas = parseInt(horasStr);
+          
+          // Somando para o exercício 8
+          somaCargaHoraria += horas;
+
+          // 6. (Primeiro 6) Nas disciplinas que contiverem "web", inclua " (Fácil)"
+          if (texto.indexOf('web') !== -1) {
+              texto += " (fácil)";
+          }
+
+          // 6. (Segundo 6) Deixe disciplinas do mesmo período com uma cor de fundo igual
+          if (texto.indexOf('período 1') !== -1) li.style.backgroundColor = '#ffcccc'; // Vermelho claro
+          if (texto.indexOf('período 2') !== -1) li.style.backgroundColor = '#ccffcc'; // Verde claro
+          if (texto.indexOf('período 3') !== -1) li.style.backgroundColor = '#ccccff'; // Azul claro
+          if (texto.indexOf('período 4') !== -1) li.style.backgroundColor = '#ffffcc'; // Amarelo claro
+
+          // 7. Acrescentar o número de aulas por semana (dividindo horas por 15)
+          let aulasPorSemana = horas / 15;
+          texto += ` - ${aulasPorSemana} aulas por semana`;
+
+          // Atualiza o texto visual no HTML
+          li.innerHTML = texto;
+
+          // Adiciona o texto modificado no vetor (Dica do item 10)
+          vetorDisciplinas.push(texto);
+      });
+
+      // 8. Calcular a soma das cargas-horárias, criar span ch e inserir no p ch_total
+      let spanCh = document.createElement('span');
+      spanCh.className = 'ch';
+      spanCh.innerHTML = somaCargaHoraria + "h";
+      document.querySelector('.ch_total').appendChild(spanCh);
+
+      // 9. Remover o elemento de classe atrapalhando
+      let mascara = document.querySelector('.mascara');
+      let atrapalhando = document.querySelector('.atrapalhando');
+      mascara.removeChild(atrapalhando);
+
+      // 10. Ordenar vetor alfabeticamente e inserir em .ordenado
+      vetorDisciplinas.sort();
+      let ulOrdenado = document.querySelector('.ordenado');
+      vetorDisciplinas.forEach(disciplina => {
+          let novoLi = document.createElement('li');
+          novoLi.innerHTML = disciplina;
+          ulOrdenado.appendChild(novoLi);
+      });
+
+      // 11. Inserir elementos em ordem alfabética decrescente (invertida)
+      vetorDisciplinas.reverse();
+      let ulDecrescente = document.querySelector('.decrescente');
+      vetorDisciplinas.forEach(disciplina => {
+          let novoLi = document.createElement('li');
+          novoLi.innerHTML = disciplina;
+          ulDecrescente.appendChild(novoLi);
+      });
+
+      // 12. Inserir elementos com a palavra "programação" na .programacao
+      let ulProgramacao = document.querySelector('.programacao');
+      vetorDisciplinas.forEach(disciplina => {
+          if (disciplina.indexOf('programação') !== -1) {
+              let novoLi = document.createElement('li');
+              novoLi.innerHTML = disciplina;
+              ulProgramacao.appendChild(novoLi);
+          }
+      });
+    </script>
+  </body>
+</html>

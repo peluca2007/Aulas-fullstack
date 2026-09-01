@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios de Eventos</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+        hr { border: 0; border-top: 2px solid #ccc; margin: 20px 0; }
+        .caixa { padding: 10px; border: 1px solid #000; display: inline-block; margin-bottom: 10px; }
+        
+        /* Estilos específicos para os exercícios */
+        #div1 { background-color: lightgray; }
+        #div2 { background-color: yellow; }
+        #div3 { width: 50px; height: 50px; background-color: blue; transition: transform 0.3s ease; margin-bottom: 10px; }
+        
+        /* Exercício 10: O tabindex permite que a div receba o foco e os eventos de teclado */
+        #cursor { width: 40px; height: 40px; background-color: red; position: relative; top: 0; left: 0; }
+        #cursor:focus { outline: 3px solid black; } /* Destaca quando clicado */
+        .area-ex10 { border: 1px dashed #999; height: 150px; padding: 10px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>Exercícios de Eventos</h1>
+
+    <!-- EVENTO CLICK -->
+    <h2>Evento click</h2>
+
+    <!-- Exercício 1 -->
+    <p>Exercício 1: Alterar a cor do div apresentado a seguir, quando o próximo botão "click1" for pressionado.</p>
+    <div id="div1" class="caixa">COR?</div><br>
+    <button id="btn1">click1</button>
+    <hr>
+
+    <!-- Exercício 2 -->
+    <p>Exercício 2: Apresentar/esconder o div apresentado a seguir, conforme o usuário pressionar o botão "click2".</p>
+    <div id="div2">Conteúdo secreto, escondido</div><br>
+    <button id="btn2">click2</button>
+    <hr>
+
+    <!-- Exercício 3 -->
+    <p>Exercício 3: Mover o div apresentado a seguir para a direita/esquerda, toda vez que o botão "click3" for clicado (utilizar o style.transform).</p>
+    <div id="div3"></div><br>
+    <button id="btn3">click3</button>
+    <hr>
+
+    <!-- Exercício 4 -->
+    <p>Exercício 4: Alterar o conteúdo textual e apresentação do botão "click4", toda vez que ele for clicado.</p>
+    <button id="btn4">click4</button>
+    <hr>
+
+    <!-- Exercício 5 -->
+    <p>Exercício 5: Acrescentar um elemento li com o texto "qualquer ítem" no elemento ul a seguir, toda vez que o botão "click5" for pressionado.</p>
+    <ul id="ul5"></ul>
+    <button id="btn5">click5</button>
+    <hr>
+
+    <!-- Exercício 6 -->
+    <p>Exercício 6: Acrescentar um elemento li com o texto "item X" no elemento ul a seguir (sendo X, o índice do elemento no ul), toda vez que o botão "click6" for pressionado.</p>
+    <ul id="ul6"></ul>
+    <button id="btn6">click6</button>
+    <hr>
+
+    <!-- EVENTOS DE TECLADO E INPUT -->
+    <h2>Eventos de teclado e o elemento input</h2>
+
+    <!-- Exercício 7 -->
+    <p>Exercício 7: Apresentar o conteúdo do input a seguir (utilizando um alert), toda vez que o botão "click7" for pressionado.</p>
+    <label>Exercício 7:</label>
+    <input type="text" id="input7">
+    <button id="btn7">click7</button>
+    <hr>
+
+    <!-- Exercício 8 -->
+    <p>Exercício 8: Inserir o conteúdo do input a seguir em um elemento li e depois acrescenta-lo no elemento ul apresentado a seguir, toda vez que o botão "click8" for pressionado.</p>
+    <label>Exercício 8:</label>
+    <input type="text" id="input8">
+    <button id="btn8">click8</button>
+    <ul id="ul8"></ul>
+    <hr>
+
+    <!-- Exercício 9 -->
+    <p>Exercício 9: Inserir o conteúdo do input a seguir dentro do elemento div a seguir, toda vez que o conteúdo do input for alterado (utilizar o evento change/keyup).</p>
+    <label>Exercício 9:</label>
+    <input type="text" id="input9">
+    <div id="div9" class="caixa" style="min-width: 200px; min-height: 24px; margin-top: 10px;"></div>
+    <hr>
+
+    <!-- Exercício 10 -->
+    <p>Exercício 10: Capturar quando as teclas de seta para baixo/cima/esquerda/direita foram pressionadas, e alterar o posicionamento do div de classe cursor (utilizar o parâmetro evento e o atributo keyCode). É possível fazer sem o input? (Dica: evento focus, tabindex)</p>
+    <label>Exercício 10 (Clique no quadrado vermelho antes de usar as setas):</label>
+    <div class="area-ex10">
+        <!-- O tabindex="0" é o que permite a div receber eventos de teclado -->
+        <div id="cursor" tabindex="0"></div>
+    </div>
+
+
+    <!-- INÍCIO DO SCRIPT -->
+    <script>
+        // Exercício 1
+        document.getElementById('btn1').addEventListener('click', function() {
+            let div1 = document.getElementById('div1');
+            div1.style.backgroundColor = div1.style.backgroundColor === 'lightblue' ? 'lightgray' : 'lightblue';
+        });
+
+        // Exercício 2
+        document.getElementById('btn2').addEventListener('click', function() {
+            let div2 = document.getElementById('div2');
+            if (div2.style.display === 'none') {
+                div2.style.display = 'block';
+            } else {
+                div2.style.display = 'none';
+            }
+        });
+
+        // Exercício 3
+        let movidoDireita = false;
+        document.getElementById('btn3').addEventListener('click', function() {
+            let div3 = document.getElementById('div3');
+            if (movidoDireita) {
+                div3.style.transform = 'translateX(0px)';
+            } else {
+                div3.style.transform = 'translateX(100px)';
+            }
+            movidoDireita = !movidoDireita;
+        });
+
+        // Exercício 4
+        document.getElementById('btn4').addEventListener('click', function() {
+            this.textContent = "Fui clicado!";
+            this.style.backgroundColor = "green";
+            this.style.color = "white";
+            this.style.fontWeight = "bold";
+        });
+
+        // Exercício 5
+        document.getElementById('btn5').addEventListener('click', function() {
+            let ul5 = document.getElementById('ul5');
+            let novoLi = document.createElement('li');
+            novoLi.textContent = "qualquer ítem";
+            ul5.appendChild(novoLi);
+        });
+
+        // Exercício 6
+        document.getElementById('btn6').addEventListener('click', function() {
+            let ul6 = document.getElementById('ul6');
+            let indice = ul6.children.length; // Conta quantos LIs já existem
+            let novoLi = document.createElement('li');
+            novoLi.textContent = "item " + indice;
+            ul6.appendChild(novoLi);
+        });
+
+        // Exercício 7
+        document.getElementById('btn7').addEventListener('click', function() {
+            let valorInput = document.getElementById('input7').value;
+            alert(valorInput);
+        });
+
+        // Exercício 8
+        document.getElementById('btn8').addEventListener('click', function() {
+            let input8 = document.getElementById('input8');
+            let ul8 = document.getElementById('ul8');
+            
+            if (input8.value.trim() !== "") {
+                let novoLi = document.createElement('li');
+                novoLi.textContent = input8.value;
+                ul8.appendChild(novoLi);
+                input8.value = ""; // Limpa o input após adicionar
+            }
+        });
+
+        // Exercício 9
+        document.getElementById('input9').addEventListener('keyup', function() {
+            let div9 = document.getElementById('div9');
+            div9.textContent = this.value;
+        });
+
+        // Exercício 10
+        let cursor = document.getElementById('cursor');
+        let posX = 0;
+        let posY = 0;
+        const PASSO = 15; // Quantidade de pixels que a div vai mover por clique
+
+        cursor.addEventListener('keydown', function(evento) {
+            // keyCode: 37 = Esquerda, 38 = Cima, 39 = Direita, 40 = Baixo
+            if (evento.keyCode >= 37 && evento.keyCode <= 40) {
+                evento.preventDefault(); // Impede a rolagem da página inteira com as setas
+            }
+
+            switch(evento.keyCode) {
+                case 37: // Seta para esquerda
+                    posX -= PASSO;
+                    break;
+                case 38: // Seta para cima
+                    posY -= PASSO;
+                    break;
+                case 39: // Seta para direita
+                    posX += PASSO;
+                    break;
+                case 40: // Seta para baixo
+                    posY += PASSO;
+                    break;
+            }
+
+            // Aplica as novas posições
+            this.style.left = posX + 'px';
+            this.style.top = posY + 'px';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca CEP - ViaCEP</title>
+    <!-- CSS do Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4>Cadastro de Endereço</h4>
+            </div>
+            <div class="card-body">
+                <form id="enderecoForm">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="cep" class="form-label">CEP</label>
+                            <input type="text" class="form-control" id="cep" placeholder="00000-000" maxlength="9">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="rua" class="form-label">Rua</label>
+                            <input type="text" class="form-control" id="rua" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="bairro" class="form-label">Bairro</label>
+                            <input type="text" class="form-control" id="bairro" readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="cidade" class="form-label">Cidade</label>
+                            <input type="text" class="form-control" id="cidade" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="estado" class="form-label">Estado (UF)</label>
+                            <input type="text" class="form-control" id="estado" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="ibge" class="form-label">IBGE</label>
+                            <input type="text" class="form-control" id="ibge" readonly>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('cep').addEventListener('blur', async function() {
+            // Remove caracteres que não sejam números
+            let cep = this.value.replace(/\D/g, ''); 
+
+            if (cep.length === 8) {
+                try {
+                    let response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                    let data = await response.json();
+
+                    if (!data.erro) {
+                        document.getElementById('rua').value = data.logradouro;
+                        document.getElementById('bairro').value = data.bairro;
+                        document.getElementById('cidade').value = data.localidade;
+                        document.getElementById('estado').value = data.uf;
+                        document.getElementById('ibge').value = data.ibge;
+                    } else {
+                        alert("CEP não encontrado.");
+                        limparCampos();
+                    }
+                } catch (error) {
+                    alert("Erro ao buscar o CEP.");
+                }
+            } else if (cep.length > 0) {
+                alert("Formato de CEP inválido.");
+                limparCampos();
+            }
+        });
+
+        function limparCampos() {
+            document.getElementById('rua').value = '';
+            document.getElementById('bairro').value = '';
+            document.getElementById('cidade').value = '';
+            document.getElementById('estado').value = '';
+            document.getElementById('ibge').value = '';
+        }
+    </script>
+</body>
+</html>
