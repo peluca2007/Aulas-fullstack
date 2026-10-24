@@ -6,9 +6,9 @@ Exercícios de JavaScript no navegador feitos nas aulas da disciplina de Program
 
 ### Aula 01
 
-- `dom_pedro_lucas_2767147.html` - manipulação do DOM: altera título e cabeçalho, calcula dias desde 1º de maio, mostra elementos ocultos, transforma a lista de disciplinas (minúsculas, cores por período, aulas por semana), soma a carga horária e gera listas em ordem alfabética, decrescente e só com disciplinas de programação
-- `eventos_pedro_lucas_2767147.html` - dez exercícios de eventos: cliques que mudam cor, visibilidade, posição e texto de elementos, criação de itens de lista, leitura de inputs com `alert`, atualização com `keyup` e movimentação de um quadrado com as setas do teclado (`tabindex` + `keydown`)
-- `viacep_pedro_lucas_2767147.html` - formulário de endereço com Bootstrap que preenche rua, bairro, cidade, UF e código IBGE ao sair do campo de CEP, consultando a API ViaCEP
+- `dom.html` - manipulação do DOM: altera título e cabeçalho, calcula dias desde 1º de maio, mostra elementos ocultos, transforma a lista de disciplinas (minúsculas, cores por período, aulas por semana), soma a carga horária e gera listas em ordem alfabética, decrescente e só com disciplinas de programação
+- `eventos.html` - dez exercícios de eventos: cliques que mudam cor, visibilidade, posição e texto de elementos, criação de itens de lista, leitura de inputs com `alert`, atualização com `keyup` e movimentação de um quadrado com as setas do teclado (`tabindex` + `keydown`)
+- `viacep.html` - formulário de endereço com Bootstrap que preenche rua, bairro, cidade, UF e código IBGE ao sair do campo de CEP, consultando a API ViaCEP
 
 ### Aula 02
 
